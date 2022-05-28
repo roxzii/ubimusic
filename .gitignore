@@ -4,3 +4,6 @@
  
 # Common credential files
 certs/
+
+# Git
+**.gitignore
