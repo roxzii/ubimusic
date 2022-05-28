@@ -3,4 +3,4 @@
 *.code-workspace
  
 # Common credential files
-./certs
+certs/
