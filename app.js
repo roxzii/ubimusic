@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 //************************ */
 
-//sequelize / express / body-parser / path / mysql2 / http / https / fs
+//sequelize / express / body-parser / path / mysql2 / http / https / fs / howler
 
 //Routes:
 
@@ -90,11 +90,11 @@ app.post('/player/play', function (req, res) {
     /*var this = self*/
     var YD = new YoutubeMp3Downloader({
         "ffmpegPath": "/usr/bin/ffmpeg",                // FFmpeg binary location
-        "outputPath": "/home/pi/ubigm/music",           // Output file location (default: the home directory)
+        "outputPath": "/home/pi/ubimusic/music",        // Output file location (default: the home directory)
         "youtubeVideoQuality": "highestaudio",          // Desired video quality (default: highestaudio)
         "queueParallelism": 20,                         // Download parallelism (default: 1)
         "progressTimeout": 2000,                        // Interval in ms for the progress reports (default: 1000)
-        "allowWebm": false                      // Enable download from WebM sources (default: false)
+        "allowWebm": false                              // Enable download from WebM sources (default: false)
     });
 
     console.log("Music Downloading...");

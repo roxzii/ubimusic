@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/player/style.css">
-    <link rel="stylesheet" href="/css/HomePage/background.css" />
+    <link rel="stylesheet" href="/css/homepage/background.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
@@ -22,10 +23,17 @@
     </header>
 
     <main>
-        <div class="music-container">
-            <form class="music-player" action="/player/play" method="POST" id="formualrio">
-                <button id="playvideo" type="submit">Play button</button>
-            </form>
+        <div class='row'>
+            <div class='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+                <div class="btn-group">
+                    <button type="button" id='dy-howler-play' class="btn btn-default">Play</button>
+                    <button type="button" id='dy-howler-pause' class="btn btn-default">Pause</button>
+                    <button type="button" id='dy-howler-stop' class="btn btn-default">Stop</button>
+                    <button type="button" id='dy-howler-volup' class="btn btn-default">Vol+</button>
+                    <button type="button" id='dy-howler-voldown' class="btn btn-default">Vol-</button>
+                </div>
+            </div>
+        </div>
             <div class="Radio">
                 <div id="info">
                     <img src="" id="RadioImg">
