@@ -4,6 +4,6 @@ function validate() {
     if (password != confirm_password) {
         alert("Password not match");
     } else {
-        document.getElementById('formualrio').submit();
+        document.getElementById('formulario').submit();
     }
 }
