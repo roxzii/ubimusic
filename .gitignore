@@ -1,9 +1,0 @@
-# VSCode
-.vscode/*
-*.code-workspace
- 
-# Common credential files
-certs/
-
-# Git
-**.gitignore
