@@ -25,8 +25,8 @@
     <main>
         <div class='music-container'>
             <div class='music-player'>
-                <audio controls="controls" preload="all" autoplay>
-                    <source src="http://localhost:8081/player/play" type="audio/mpeg" />
+                <audio controls="controls" preload="all" autoplay id="music">
+                    <source src="" type="audio/mpeg" />
                 </audio>
                 <div class="btn-group">
                     <button type="button" id='play' class="btn btn-default">Play</button>
@@ -57,4 +57,10 @@
 </body>
 
 <script src="/Script/RadioWorldAPI.js"></script>
+<script>
+    var music = document.getElementById('music');
+    var cookie = document.cookie;
+    console.log('cookie = ' + cookie);
+    music.src = 'http://roxzii.chickenkiller.com:8084/public/music/' + cookie.substring(cookie.search('videoid') + 8, cookie.length) + '.mp3';
+</script>
 </html>
