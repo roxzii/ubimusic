@@ -23,14 +23,17 @@
     </header>
 
     <main>
-        <div class='row'>
-            <div class='col-xs-12 col-sm-6 col-md-6 col-lg-6'>
+        <div class='music-container'>
+            <div class='music-player'>
+                <audio controls="controls" preload="all" autoplay>
+                    <source src="http://localhost:8081/player/play" type="audio/mpeg" />
+                </audio>
                 <div class="btn-group">
-                    <button type="button" id='dy-howler-play' class="btn btn-default">Play</button>
-                    <button type="button" id='dy-howler-pause' class="btn btn-default">Pause</button>
-                    <button type="button" id='dy-howler-stop' class="btn btn-default">Stop</button>
-                    <button type="button" id='dy-howler-volup' class="btn btn-default">Vol+</button>
-                    <button type="button" id='dy-howler-voldown' class="btn btn-default">Vol-</button>
+                    <button type="button" id='play' class="btn btn-default">Play</button>
+                    <button type="button" id='pause' class="btn btn-default">Pause</button>
+                    <button type="button" id='stop' class="btn btn-default">Stop</button>
+                    <button type="button" id='volup' class="btn btn-default">Vol+</button>
+                    <button type="button" id='voldown' class="btn btn-default">Vol-</button>
                 </div>
             </div>
         </div>

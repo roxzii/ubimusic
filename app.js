@@ -5,7 +5,7 @@ const http = require('http');
 const https = require('https');
 var privateKey  = fs.readFileSync(__dirname + '/certs/selfsigned.key', 'utf8');
 var certificate = fs.readFileSync(__dirname + '/certs/selfsigned.crt', 'utf8');
-
+var vidid
 var credentials = {key: privateKey, cert: certificate};
 const express = require('express');
 const app = express();
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 //************************ */
 
-//sequelize / express / body-parser / path / mysql2 / http / https / fs / howler
+//sequelize / express / body-parser / path / mysql2 / http / https / fs /
 
 //Routes:
 
@@ -48,7 +48,7 @@ app.post('/', function (req, res) {
 
 //Home Page:
 app.get('/', function (req, res) {
-    res.sendFile("./views/index.html", { root: __dirname });
+    res.sendFile("./views/login.html", { root: __dirname });
 });
 
 //Register Page:
@@ -83,18 +83,68 @@ app.post('/player', function (req, res) {
     }))
 })
 
+
+app.get('/player/play', (req, res) => {
+    var music = path.join('/','home', 'roxzii', 'Code', 'ubimusic', 'public', 'music', vidid + '.mp3');
+    var stat = fs.statSync(music);
+    var range = req.headers.range;
+    var readStream;
+
+    if (range != undefined) {
+        var parts = range.replace(/bytes=/, '').split('-');
+        var partialStart = parts[0];
+        var partialEnd = parts[1];
+
+        if (isNaN(partialStart) || partialStart == '') {
+            partialStart = '0';
+        }
+
+        if (isNaN(partialEnd) || partialEnd == '') {
+            partialEnd = stat.size - 1;
+        }
+
+        var start = parseInt(partialStart, 10);
+        var end = parseInt(partialEnd, 10);
+        var contentLength = end - start + 1;
+
+        console.log(`Streaming ${music} as ${contentLength} bytes from ${start} to ${end}`);
+
+        res.writeHead(200, {
+            'Content-Type': 'audio/mpeg',
+            'Content-Length': contentLength,
+            'Content-Range': 'bytes=' + start + '-' + end + '/' + stat.size,
+            'Accept-Ranges': 'bytes'
+        });
+
+        readStream = fs.createReadStream(music, { start: start, end: end });
+    } else {
+        console.log(`Streaming ${music} as ${stat.size} bytes`);
+
+        res.header({
+            'Content-Type': 'audio/mpeg',
+            'Content-Length': stat.size
+        });
+
+        readStream = fs.createReadStream(music);
+    }
+
+    readStream.pipe(res);
+
+    console.log('Done');
+});
+
 app.post('/player/play', function (req, res) {
     var YoutubeMp3Downloader = require("youtube-mp3-downloader");
 
     //Configure YoutubeMp3Downloader with your settings
     /*var this = self*/
     var YD = new YoutubeMp3Downloader({
-        "ffmpegPath": "/usr/bin/ffmpeg",                // FFmpeg binary location
-        "outputPath": "/home/pi/ubimusic/music",        // Output file location (default: the home directory)
-        "youtubeVideoQuality": "highestaudio",          // Desired video quality (default: highestaudio)
-        "queueParallelism": 20,                         // Download parallelism (default: 1)
-        "progressTimeout": 2000,                        // Interval in ms for the progress reports (default: 1000)
-        "allowWebm": false                              // Enable download from WebM sources (default: false)
+        "ffmpegPath": "/usr/bin/ffmpeg",                            // FFmpeg binary location
+        "outputPath": "/home/roxzii/Code/ubimusic/public/music",    // Output file location (default: the home directory)
+        "youtubeVideoQuality": "highestaudio",                      // Desired video quality (default: highestaudio)
+        "queueParallelism": 20,                                     // Download parallelism (default: 1)
+        "progressTimeout": 2000,                                    // Interval in ms for the progress reports (default: 1000)
+        "allowWebm": false                                          // Enable download from WebM sources (default: false)
     });
 
     console.log("Music Downloading...");
@@ -103,6 +153,7 @@ app.post('/player/play', function (req, res) {
     YD.download(req.body.videoid);   
     console.log("ID do video -> " + req.body.videoid);
     console.log("Music Downloaded!");
+    vidid = req.body.videoTitle;
     var TittleSemEspaco = req.body.videoTitle.replace(/ /g, "-");
     console.log("Titulo do video -> " + TittleSemEspaco);
     res.clearCookie('videoTittle')
