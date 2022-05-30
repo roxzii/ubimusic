@@ -2,16 +2,18 @@
 
 const fs = require('fs');
 const http = require('http');
+var url = require('url');
 const https = require('https');
-var privateKey  = fs.readFileSync(__dirname + '/certs/selfsigned.key', 'utf8');
+var privateKey = fs.readFileSync(__dirname + '/certs/selfsigned.key', 'utf8');
 var certificate = fs.readFileSync(__dirname + '/certs/selfsigned.crt', 'utf8');
-var credentials = {key: privateKey, cert: certificate};
+var credentials = { key: privateKey, cert: certificate };
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const User = require('./models/users');
 const { Script } = require('vm');
+const { time } = require('console');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -20,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 //************************ */
 
-//sequelize / express / body-parser / path / mysql2 / http / https / fs /
+//sequelize / express / body-parser / path / mysql2 / http / https / fs / file-url
 
 //Routes:
 
@@ -72,6 +74,7 @@ app.post('/player', function (req, res) {
             if (users[i].nome == req.body.username && users[i].senha == req.body.password) {
                 console.log("Usuario logado com sucesso!");
                 res.clearCookie('videoTittle')
+                res.clearCookie('videoImg')
                 res.sendFile("./views/player.html", { root: __dirname })
                 return true;
             }
@@ -83,38 +86,24 @@ app.post('/player', function (req, res) {
 })
 
 app.post('/player/play', function (req, res) {
-    var YoutubeMp3Downloader = require("youtube-mp3-downloader");
+    let url = 'https://www.youtube.com/watch?v=' + req.body.videoid
+    const ytdl = require('ytdl-core');
 
-    //Configure YoutubeMp3Downloader with your settings
-    /*var this = self*/
-    var YD = new YoutubeMp3Downloader({
-        "ffmpegPath": "/usr/bin/ffmpeg",                            // FFmpeg binary location
-        "outputPath": "/home/pi/ubimusic/public/music",             // Output file location (default: the home directory)
-        "youtubeVideoQuality": "highestaudio",                      // Desired video quality (default: highestaudio)
-        "queueParallelism": 20,                                     // Download parallelism (default: 1)
-        "progressTimeout": 2000,                                    // Interval in ms for the progress reports (default: 1000)
-        "allowWebm": false                                          // Enable download from WebM sources (default: false)
-    });
+    const Output = path.resolve('/home/pi/ubimusic/public/music/' + req.body.videoTitle + '.webm');
 
-    console.log("Music Downloading...");
-
-    //Download video and save as MP3 file
-    YD.download(req.body.videoid);   
+    const video = ytdl(url, { quality: 'lowestaudio', format: 'webm' });
     console.log("ID do video -> " + req.body.videoid);
     console.log("Music Downloaded!");
-    vidid = req.body.videoTitle;
-    var TittleSemEspaco = req.body.videoTitle.replace(/ /g, "-");
-    console.log("Titulo do video -> " + TittleSemEspaco);
     res.clearCookie('videoTittle')
-    res.clearCookie('videoid')
-    res.cookie('videoTittle', TittleSemEspaco );
-    res.cookie('videoid', req.body.videoTitle );
-    YD.on("finished", function(err, data) {
+    res.clearCookie('videoImg')
+    res.cookie('videoTittle', req.body.videoTitle);
+    res.cookie('videoImg', req.body.videoImg);
+    video.pipe(fs.createWriteStream(Output)).on('finish', function () {
         res.sendFile("./views/player.html", { root: __dirname });
     });
 })
 
-app.get('/player/search', function(req,res){
+app.get('/player/search', function (req, res) {
     var name = req.body.music;
     res.sendFile(__dirname + "/views/list.html", name);
 })
@@ -125,6 +114,6 @@ var httpsServer = https.createServer(credentials, app);
 httpServer.listen(8081, function () {
     console.log('Server listening on port 8081');
 })
-httpsServer.listen(8443, function() {
+httpsServer.listen(8443, function () {
     console.log('Server listening on port 8443');
 })

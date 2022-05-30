@@ -13,7 +13,7 @@ document.getElementById("pesquisa").value = music;
 console.log(music)
 //My key -> AIzaSyBo9yC1b1cpXRt44kmCzN0ymxL6yOYiLKA
 //Ruben key -> AIzaSyDbn9jFwiiv5x6EleaEDPEdem-AwsLRdTY
-fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=15&q=${music}&key=AIzaSyDbn9jFwiiv5x6EleaEDPEdem-AwsLRdTY`)
+fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=40&q=${music}&key=AIzaSyDbn9jFwiiv5x6EleaEDPEdem-AwsLRdTY`)
     .then(function (response) {
         return response.json();
     })
@@ -44,7 +44,7 @@ fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=
             textImg.type = "text";
             textImg.name = "videoImg";
             textImg.id = "videoImg";
-            textImg.value = videos[i].snippet.thumbnails.default.url;
+            textImg.value = videos[i].snippet.thumbnails.high.url;
             textImg.style.display = "none";
             textid.value = videos[i].id.videoId;
             textid.innerHTML = videos[i].id.videoId;
@@ -62,6 +62,7 @@ fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=
             div.appendChild(textid);
             div.appendChild(br);
             div.appendChild(videoTittle);
+            div.appendChild(textImg);
 
             div.onclick = function () {
                 div.submit();

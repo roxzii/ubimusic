@@ -95,69 +95,98 @@ let Radio9 = {
 RadioName.innerHTML = RadioList[RadioStation].name;
 RadioImg.src = RadioList[RadioStation].img;
 
+var click = 0
 
+//Função responsável por dar play e pausa a rádio no player.html
 function PlayPause() {
-	var audio = document.getElementsByTagName("audio");
-	var PlayPauseButton = document.getElementById("Play-PauseIcon");
-	if (audio[0].paused) {
+	var audio = document.getElementsByTagName("audio"); //Pega o elemento audio
+	var tittle = document.getElementById("Tittle") //Pega a label com o titulo da música
+	var PlayPauseButton = document.getElementById("Play-PauseIcon"); //Pega o botão de play/pause da radio
+
+	//Verefica se o utilizador esta a ouvir uma musica, se sim para a musica e altera o icone do play para pause
+	if (document.getElementById("Play-Pause-Icon").innerText = "pause") {
+		document.getElementById("Play-Pause-Icon").innerText = "play_arrow";
+		audio[0].pause();
+	}
+
+	if (PlayPauseButton.innerText == "play_arrow") {
+		if (click == 0) {
+			audio[0].src = RadioList[RadioStation].url;
+			click++
+		}
+		tittle.innerText = "Rádio";
+		document.getElementById("music-player").style = "background-color: rgb(138, 144, 189);";
 		audio[0].play();
 		PlayPauseButton.innerHTML = "pause";
 		RadioImg.style = "animation-play-state: running";
 	} else {
+		console.log("pause");
 		audio[0].pause();
 		PlayPauseButton.innerHTML = "play_arrow";
 		RadioImg.style = "animation-play-state: paused";
 	}
 }
 
+//Responsável por passar para a radio seguinte no player.html
+//Se o utilizador estiver com uma radio ligada ele para a radio muda para a seguinte e voltar a da play
 function After() {
 	var audio = document.getElementsByTagName("audio");
 	RadioStation++;
 	if (RadioStation >= RadioList.length) {
 		RadioStation = 0;
-		if(audio[0].paused){
-			audio[0].src = RadioList[RadioStation].url;
-		}	else{
-			audio[0].pause();
-			audio[0].src = RadioList[RadioStation].url;
-			audio[0].play();
+		if (document.getElementById("Play-Pause-Icon").innerText == "play_arrow") {
+			if (audio[0].paused) {
+				audio[0].src = RadioList[RadioStation].url;
+			} else {
+				audio[0].pause();
+				audio[0].src = RadioList[RadioStation].url;
+				audio[0].play();
+			}
 		}
 		RadioName.innerHTML = RadioList[RadioStation].name;
 		RadioImg.src = RadioList[RadioStation].img;
-	}	else{
-		if(audio[0].paused){
-			audio[0].src = RadioList[RadioStation].url;
-		}	else{
-			audio[0].pause();
-			audio[0].src = RadioList[RadioStation].url;
-			audio[0].play();
+	} else {
+		if (document.getElementById("Play-Pause-Icon").innerText == "play_arrow") {
+			if (audio[0].paused) {
+				audio[0].src = RadioList[RadioStation].url;
+			} else {
+				audio[0].pause();
+				audio[0].src = RadioList[RadioStation].url;
+				audio[0].play();
+			}
 		}
 		RadioName.innerHTML = RadioList[RadioStation].name;
 		RadioImg.src = RadioList[RadioStation].img;
 	}
 }
 
-function Before(){
+//Responsável por passar para a radio anterior no player.html
+//Se o utilizador estiver com uma radio ligada ele para a radio muda para a anterior e voltar a da play
+function Before() {
 	var audio = document.getElementsByTagName("audio");
 	RadioStation--;
 	if (RadioStation < 0) {
 		RadioStation = RadioList.length - 1;
-		if(audio[0].paused){
-			audio[0].src = RadioList[RadioStation].url;
-		}	else{
-			audio[0].pause();
-			audio[0].src = RadioList[RadioStation].url;
-			audio[0].play();
+		if (document.getElementById("Play-Pause-Icon").innerText == "play_arrow") {
+			if (audio[0].paused) {
+				audio[0].src = RadioList[RadioStation].url;
+			} else {
+				audio[0].pause();
+				audio[0].src = RadioList[RadioStation].url;
+				audio[0].play();
+			}
 		}
 		RadioName.innerHTML = RadioList[RadioStation].name;
 		RadioImg.src = RadioList[RadioStation].img;
-	}	else{
-		if(audio[0].paused){
-			audio[0].src = RadioList[RadioStation].url;
-		}	else{
-			audio[0].pause();
-			audio[0].src = RadioList[RadioStation].url;
-			audio[0].play();
+	} else {
+		if (document.getElementById("Play-Pause-Icon").innerText == "play_arrow") {
+			if (audio[0].paused) {
+				audio[0].src = RadioList[RadioStation].url;
+			} else {
+				audio[0].pause();
+				audio[0].src = RadioList[RadioStation].url;
+				audio[0].play();
+			}
 		}
 		RadioName.innerHTML = RadioList[RadioStation].name;
 		RadioImg.src = RadioList[RadioStation].img;
