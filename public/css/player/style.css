@@ -1,6 +1,7 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    overflow: hidden;
+    overflow-x: none;
+    overflow-y: hidden;
 }
 
 main {
@@ -76,9 +77,8 @@ main .music-container {
     background-color: #1b2735;
     justify-content: center;
     align-items: center;
+
 }
-
-
 
 main .music-container .music-player {
     display: flex;
@@ -94,6 +94,29 @@ main .music-container .music-player {
     background-repeat: no-repeat;
     background-size: cover;
     background-position-y: -75px;
+
+    animation: size 1.5s linear infinite;
+    animation-play-state: paused;
+}
+
+main .music-container .music-player .btn-group{
+    display: flex;
+    align-items: center;
+    padding-top: 12px;
+    margin-top: 3px;
+    padding-left: 10px;
+    width: 99%;
+    height: 63px;
+    background-color: rgba(27, 39, 53, 0.7);
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+main .music-container .music-player progress{
+    padding: 0px;
+    margin-bottom: -8px;
+    width: 100%;
+    cursor: pointer;
 }
 
 main .music-container .music-player label {
@@ -139,7 +162,9 @@ main .music-container .music-player label {
 #PlayPauseButton,
 #BeforeButton,
 #AfterButton,
-#play {
+#play,
+#download,
+#volume {
     background-color: #36373f;
     border: none;
     border-radius: 30px;
@@ -147,12 +172,29 @@ main .music-container .music-player label {
     width: 50px;
 }
 
+#download {
+    margin-left: 585px;
+}
+
 #PlayPauseButton:hover i,
 #BeforeButton:hover i,
 #AfterButton:hover i,
-#play:hover i {
+#play:hover i,
+#download:hover i,
+#volume:hover i {
     color: white;
 }
+
+#VolumeBar{
+    width: 190px;
+}
+
+input[type=range] {
+    height: 13px;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px #000000;
+    background: #AC51B5;
+  }
 
 @media screen and (max-width: 1000px) {
     .Radio {
@@ -184,4 +226,16 @@ main .music-container .music-player label {
     to {
         transform: rotate(360deg);
     }
+}
+
+@keyframes size {
+    0% {box-shadow: 0px 0px 0px rgb(138, 144, 189, 0.6);}
+    10% {box-shadow: 1px 1px 2px rgb(138, 144, 189, 0.6), -1px -1px 2px rgb(138, 144, 189, 0.6);}
+    20% {box-shadow: 2px 2px 4px rgb(138, 144, 189, 0.6), -2px -2px 4px rgb(138, 144, 189, 0.6);}
+    25% {box-shadow: 3px 3px 6px rgb(138, 144, 189, 0.6), -3px -3px 6px rgb(138, 144, 189, 0.6);}
+    50% {box-shadow: 6px 6px 12px rgb(138, 144, 189, 0.6), -6px -6px 12px rgb(138, 144, 189, 0.6);}
+    75% {box-shadow: 3px 3px 6px rgb(138, 144, 189, 0.6), -3px -3px 6px rgb(138, 144, 189, 0.6);}
+    80% {box-shadow: 2px 2px 4px rgb(138, 144, 189, 0.6), -2px -2px 4px rgb(138, 144, 189, 0.6);}
+    90% {box-shadow: 1px 1px 2px rgb(138, 144, 189, 0.6), -1px -1px 2px rgb(138, 144, 189, 0.6);}
+    100% {box-shadow: 0px 0px 0px rgb(138, 144, 189, 0.6);}
 }

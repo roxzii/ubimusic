@@ -104,7 +104,7 @@ function PlayPause() {
 	var PlayPauseButton = document.getElementById("Play-PauseIcon"); //Pega o botão de play/pause da radio
 
 	//Verefica se o utilizador esta a ouvir uma musica, se sim para a musica e altera o icone do play para pause
-	if (document.getElementById("Play-Pause-Icon").innerText = "pause") {
+	if (document.getElementById("Play-Pause-Icon").innerText == "pause") {
 		document.getElementById("Play-Pause-Icon").innerText = "play_arrow";
 		audio[0].pause();
 	}
@@ -115,7 +115,7 @@ function PlayPause() {
 			click++
 		}
 		tittle.innerText = "Rádio";
-		document.getElementById("music-player").style = "background-color: rgb(138, 144, 189);";
+		document.getElementById("music-player").style.backgroundImage = "url('https://i.pinimg.com/originals/56/9d/4f/569d4f427190c60eef9851ffd2e96c83.jpg')";
 		audio[0].play();
 		PlayPauseButton.innerHTML = "pause";
 		RadioImg.style = "animation-play-state: running";

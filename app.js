@@ -12,7 +12,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const User = require('./models/users');
-const { Script } = require('vm');
+const { script } = require('vm');
 const { time } = require('console');
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -101,6 +101,14 @@ app.post('/player/play', function (req, res) {
     video.pipe(fs.createWriteStream(Output)).on('finish', function () {
         res.sendFile("./views/player.html", { root: __dirname });
     });
+})
+
+app.post('/player/download', function (req, res) {
+    console.log(decodeURIComponent(req.body.MusicTittle));
+    var filePath = "/home/pi/ubimusic/public/music/" + decodeURIComponent(req.body.MusicTittle) +".webm"; //caminho do arquivo completo
+    var fileName = decodeURIComponent(req.body.MusicTittle) + ".webm"; // O nome padrão que o browser vai usar pra fazer download
+
+    res.download(filePath, fileName);
 })
 
 app.get('/player/search', function (req, res) {

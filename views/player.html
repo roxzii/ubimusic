@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>UBI Music</title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/player/style.css">
     <link rel="stylesheet" href="/css/homepage/background.css" />
@@ -29,9 +29,15 @@
                 <audio id="music">
                     <source src="" type="audio/mpeg"/>
                 </audio>
+                <progress id="music-progress-bar" value="0" max="100"></progress>
                 <div class="btn-group">
-                    <button type="button" id='play' class="btn btn-default" onclick="Play()"><i class="material-icons" id="Play-Pause-Icon">play_arrow</i></button>
-                    <input type="range" min="0" max="10" value="10" id="VolumeBar">
+                    <form action="/player/download" method="POST">
+                        <button type="button" id='play' onclick="Play()"><i class="material-icons" id="Play-Pause-Icon">play_arrow</i></button>
+                        <button type="button" id="volume"><i class="material-icons" id="Volume-Icon">volume_up</i></button>
+                        <input type="range" min="0" max="10" value="10" id="VolumeBar" style="display: none">
+                        <input type="text" id="TittleDownload" name="MusicTittle" style="display: none;">
+                        <button type="submit" id='download'><i class="material-icons">download</i></button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -55,5 +61,5 @@
 </body>
 
 <script src="/Script/RadioWorldAPI.js"></script>
-<script src="/Script/MusicCrontrol.js"></script>
+<script src="/Script/MusicControl.js"></script>
 </html>
